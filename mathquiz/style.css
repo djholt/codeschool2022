@@ -1,0 +1,10 @@
+body {
+  font-family: sans-serif;
+}
+
+#answer-feedback {
+  font-weight: bold;
+  margin: 10px 0;
+  padding: 5px;
+  width: 300px;
+}
