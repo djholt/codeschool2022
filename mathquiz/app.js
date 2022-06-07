@@ -2,13 +2,21 @@ var submitButton = document.querySelector("#submit-button");
 console.log("submit button:", submitButton);
 
 function newProblem() {
-  var a = Math.floor(Math.random() * 10);
-  var b = Math.floor(Math.random() * 10);
+  var op = Math.floor(Math.random() * 2);
+  var a = Math.floor(Math.random() * 20);
+  var b = Math.floor(Math.random() * 20);
   var spanA = document.querySelector("#number-a");
   var spanB = document.querySelector("#number-b");
+  var spanOp = document.querySelector("#op");
   spanA.innerHTML = a;
   spanB.innerHTML = b;
-  return a + b;
+  if (op == 1) {
+    spanOp.innerHTML = '+';
+    return a + b;
+  } else {
+    spanOp.innerHTML = 'x';
+    return a * b;
+  }
 }
 
 var correctAnswer = newProblem();

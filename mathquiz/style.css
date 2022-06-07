@@ -1,10 +1,29 @@
 body {
-  font-family: sans-serif;
+  background: #333333;
+  color: #FFFFFF;
+  font-family: 'Roboto Slab', serif;
+  text-align: center;
+}
+
+#question {
+  font-size: 48px;
+  margin: 20px 0;
+}
+
+#answer-input {
+  font-size: 24px;
+  width: 80px;
+}
+
+#submit-button {
+  font-size: 24px;
 }
 
 #answer-feedback {
+  border-radius: 10px;
+  font-size: 24px;
   font-weight: bold;
-  margin: 10px 0;
-  padding: 5px;
+  margin: 30px auto;
+  padding: 10px;
   width: 300px;
 }

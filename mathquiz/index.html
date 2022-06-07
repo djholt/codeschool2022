@@ -2,19 +2,22 @@
 <html>
   <head>
     <title>Math Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto+Slab:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <h1>Math Quiz</h1>
-    <span id="number-a">X</span>
-    +
-    <span id="number-b">Y</span>
-    =
+    <div id="question">
+      <span id="number-a">X</span>
+      <span id="op">+</span>
+      <span id="number-b">Y</span>
+      = <strong>?</strong>
+    </div>
     <input type="number" id="answer-input">
-    <button id="submit-button">Submit Answer</button>
-
+    <button id="submit-button">Submit</button>
     <div id="answer-feedback"></div>
-
     <script src="app.js"></script>
   </body>
 </html>
