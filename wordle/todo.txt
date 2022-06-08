@@ -1,0 +1,43 @@
+UI/visual
+---------
+*letter board
+*letter colors
+stats panel
+tutorial
+
+
+UX/interaction
+--------------
+letter/guess entry
+- keyboard
+- key events
+*- text input + button
+win/lose experience
+
+
+Gameplay + logic
+----------------
+*guess feedback
+*- correct letters: positionally accurate
+*- partially correct letters: positionally incorrect
+*- question: multiple/same letters
+game over conditions
+winning conditions
+valid guess:
+*- exactly 5 letters
+- valid word (in THE LIST)
+word of the day:
+- of the day? of the hour? whatever?
+- time based? or on demand?
+- choose from the answer list
+- winning streak
+- statistics
+need to build the word lists
+- fetch words from an API
+
+
+Extras
+------
+key events
+keyboard
+animations
