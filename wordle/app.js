@@ -1,9 +1,28 @@
 var ATTEMPTS = 6;
 var LENGTH = 5;
 
-var correctWord = "flood";
-//var guesses = ["early", "rodeo", "adder", "added", "world", "flood"];
+var correctWord = "";
+var currentGuess = "";
 var guesses = [];
+var allowed = [];
+var answers = [];
+var gameOver = false;
+
+function fetchWordList() {
+  fetch("https://api.jsonbin.io/b/629f9937402a5b38021f6b38").then(function (response) {
+    response.json().then(function (data) {
+      allowed = data.allowed.concat(data.answers);
+      answers = data.answers;
+      randomizeWord();
+    });
+  });
+}
+
+function randomizeWord() {
+  var index = Math.floor(Math.random() * answers.length);
+  correctWord = answers[index];
+  console.log("the answer is", correctWord);
+}
 
 function checkWord(correct, guess) {
   var result = [0, 0, 0, 0, 0];
@@ -56,29 +75,57 @@ function updateGuesses() {
           letterDiv.classList.add("contains");
         }
       }
+      if (i == guesses.length && j < currentGuess.length) {
+        // show the current guess in the last row
+        letterDiv.innerHTML = currentGuess[j];
+      }
       guessDiv.appendChild(letterDiv);
     }
   }
 }
 
-function setupInputs() {
-  var guessInput = document.querySelector("#guess-input");
-  var guessButton = document.querySelector("#guess-button");
+function submitGuess() {
   var messageDiv = document.querySelector("#message");
-  guessButton.onclick = function () {
-    var guess = guessInput.value;
-  
-    if (guess.length == 5) {
-      guesses.push(guess);
-      console.log("guesses:", guesses);
-      guessInput.value = "";
+
+  if (currentGuess.length != 5) {
+    messageDiv.innerHTML = "Bruh. 5 letters, please.";
+  } else if (!allowed.includes(currentGuess)) {
+    messageDiv.innerHTML = "Not a real word. Try again.";
+  } else {
+    if (guesses.length < 6) {
+      guesses.push(currentGuess);
       messageDiv.innerHTML = "";
-      updateGuesses();
-    } else {
-      messageDiv.innerHTML = "Bruh. This is Wordzle. 5 letters, please.";
+      if (currentGuess == correctWord) {
+        messageDiv.innerHTML = "You win!";
+        gameOver = true;
+      } else if (guesses.length == 6) {
+        messageDiv.innerHTML = "You lose!";
+        gameOver = true;
+      }
     }
+
+    updateGuesses();
+  }
+}
+
+function setupInputs() {
+  document.onkeydown = function (event) {
+    if (!gameOver && !event.altKey && !event.ctrlKey && !event.metaKey) {
+      if (event.keyCode >= 65 && event.keyCode <= 90) {
+        if (currentGuess.length < 5) {
+          currentGuess += event.key.toLowerCase();
+        }
+      } else if (event.keyCode == 8) {
+        currentGuess = currentGuess.slice(0, -1);
+      } else if (event.keyCode == 13) {
+        submitGuess();
+        currentGuess = "";
+      }
+    }
+    updateGuesses();
   };
 }
 
+fetchWordList();
 setupInputs();
 updateGuesses();
