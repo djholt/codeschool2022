@@ -1,27 +1,70 @@
 var ATTEMPTS = 6;
 var LENGTH = 5;
 
-var correctWord = "";
+var correctWord = "";  // save this
 var currentGuess = "";
-var guesses = [];
+var guesses = [];      // save this
 var allowed = [];
 var answers = [];
-var gameOver = false;
+var gameOver = false;  // save this
+
+function loadState() {
+  correctWord = JSON.parse(localStorage.getItem("correctWord"));
+  guesses     = JSON.parse(localStorage.getItem("guesses"));
+  gameOver    = JSON.parse(localStorage.getItem("gameOver"));
+
+  if (!guesses) {
+    guesses = [];
+  }
+  if (!gameOver) {
+    gameOver = false;
+  }
+}
+
+function saveState() {
+  localStorage.setItem("correctWord", JSON.stringify(correctWord));
+  localStorage.setItem("guesses",     JSON.stringify(guesses));
+  localStorage.setItem("gameOver",    JSON.stringify(gameOver));
+}
+
+function resetGame() {
+  correctWord = "";
+  currentGuess = "";
+  guesses = [];
+  gameOver = false;
+}
 
 function fetchWordList() {
   fetch("https://api.jsonbin.io/b/629f9937402a5b38021f6b38").then(function (response) {
     response.json().then(function (data) {
       allowed = data.allowed.concat(data.answers);
       answers = data.answers;
-      randomizeWord();
+
+      loadState();
+      chooseNewWord();
+      updateGuesses();
+      setupInputs();
     });
   });
 }
 
-function randomizeWord() {
-  var index = Math.floor(Math.random() * answers.length);
-  correctWord = answers[index];
-  console.log("the answer is", correctWord);
+function chooseNewWord() {
+  var newWord = getCurrentWord();
+  if (!correctWord || correctWord != newWord) {
+    resetGame();
+    correctWord = newWord;
+    saveState();
+    console.log("the answer is now", correctWord);
+  } else {
+    console.log("the answer is still", correctWord);
+  }
+}
+
+function getCurrentWord() {
+  var dateString = moment().format('YYYYMMDDHHmm');
+  var dateNumber = parseInt(dateString, 10);
+  var word = answers[dateNumber % answers.length];
+  return word;
 }
 
 function checkWord(correct, guess) {
@@ -105,6 +148,7 @@ function submitGuess() {
     }
 
     updateGuesses();
+    saveState();
   }
 }
 
@@ -127,5 +171,3 @@ function setupInputs() {
 }
 
 fetchWordList();
-setupInputs();
-updateGuesses();

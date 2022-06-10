@@ -26,10 +26,10 @@ Gameplay + logic
 *- valid word (in THE LIST)
 *word lists
 *- fetch words from an API
-word of the day:
+*word of the day:
 *- choose randomly from the answer list
-- of the day? of the hour? whatever?
-- time based? or on demand?
+*- of the day? of the hour? whatever?
+*- time based? or on demand?
 statistics
 - wins by # of guesses
 - win percentage
@@ -39,7 +39,7 @@ statistics
 
 Extras
 ------
-save progress + stats
+*save progress
 *key events
 keyboard
 animations
