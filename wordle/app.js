@@ -35,10 +35,10 @@ function resetGame() {
 }
 
 function fetchWordList() {
-  fetch("https://api.jsonbin.io/b/629f9937402a5b38021f6b38").then(function (response) {
+  fetch("https://api.jsonbin.io/v3/b/629f9937402a5b38021f6b38").then(function (response) {
     response.json().then(function (data) {
-      allowed = data.allowed.concat(data.answers);
-      answers = data.answers;
+      allowed = data.record.allowed.concat(data.record.answers);
+      answers = data.record.answers;
 
       loadState();
       chooseNewWord();
