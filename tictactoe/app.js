@@ -1,6 +1,7 @@
 var playerTurn = 0;
 var gameOver = false;
 var allTiles = document.querySelectorAll(".tile");
+var statusHeading = document.querySelector("h2");
 var turnSpan = document.querySelector("#turn");
 var winnerDiv = document.querySelector("#winner");
 
@@ -21,6 +22,19 @@ function checkWinner(player) {
   return winner;
 }
 
+function checkOver() {
+  return document.querySelectorAll(".x, .o").length == 9;
+}
+
+function showGameResult(message, className) {
+  console.log(message);
+  winnerDiv.innerHTML = message;
+  winnerDiv.classList.add(className);
+  winnerDiv.style.display = "block";
+  statusHeading.style.display = "none";
+  gameOver = true;
+}
+
 allTiles.forEach(function (tile) {
   tile.onclick = function () {
     if (tile.innerHTML == "" && !gameOver) {
@@ -28,10 +42,9 @@ allTiles.forEach(function (tile) {
         tile.innerHTML = "X";
         tile.classList.add("x");
         if (checkWinner("x")) {
-          console.log("X WINS");
-          winnerDiv.innerHTML = "X WINS!";
-          winnerDiv.classList.add("x");
-          gameOver = true;
+          showGameResult("X WINS!", "x");
+        } else if (checkOver()) {
+          showGameResult("TIE!", "tie");
         }
         playerTurn = 1;
         turnSpan.innerHTML = "O";
@@ -39,10 +52,9 @@ allTiles.forEach(function (tile) {
         tile.innerHTML = "O";
         tile.classList.add("o");
         if (checkWinner("o")) {
-          console.log("O WINS");
-          winnerDiv.innerHTML = "O WINS!";
-          winnerDiv.classList.add("o");
-          gameOver = true;
+          showGameResult("O WINS!", "o");
+        } else if (checkOver()) {
+          showGameResult("TIE!", "tie");
         }
         playerTurn = 0;
         turnSpan.innerHTML = "X";

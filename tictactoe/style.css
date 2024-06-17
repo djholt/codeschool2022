@@ -33,8 +33,14 @@ body {
   color: #CC00CC;
 }
 
+.tie {
+  background-color: #CCCCCC;
+  color: #333333;
+}
+
 #winner {
   border-radius: 10px;
+  display: none;
   font-size: 24px;
   font-weight: bold;
   margin: 10px auto;
